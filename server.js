@@ -8,15 +8,6 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 
-// global variables
-var putData = "";
-var setRow = "";
-var setCell = "";
-var getTimestamp = "";
-var hapikey = process.env.HAPI_KEY_HS;
-
-
-
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -53,8 +44,7 @@ router.get('/', function(req, res) {
 });
 
 
-
-// Tap1name
+// form submit
 // ----------------------------------------------------
 router.route('/submit')
    
@@ -72,7 +62,7 @@ var postData = querystring.stringify({
     'firstname': req.body.firstname,
     'lastname': req.body.lastname,
     'hs_context': JSON.stringify({
-       // "hutk": req.cookies.hubspotutk,
+       "hutk": req.cookies.hubspotutk,
         "ipAddress": req.headers['x-forwarded-for'] || req.connection.remoteAddress,
         "pageUrl": "https://www.phrasingpro.com/api",
         "pageName": "Forms API - Tech Test"
