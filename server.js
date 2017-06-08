@@ -106,6 +106,57 @@ request.end();
 res.json({message: res.statusCode});
 }); 
 
+// trigger
+// ----------------------------------------------------
+router.route('/trigger')
+   
+.get(function(req, res) {
+
+//require Node modules
+
+var https = require('https');
+var querystring = require('querystring');
+
+// build the data object
+
+var getData = querystring.stringify({
+    'email': req.body.email
+});
+
+// set the post options, changing out the HUB ID and FORM GUID variables.
+
+var options = {
+    hostname: 'track.hubspot.com',
+    path: '/v1/event?_n=clickedButton&_a=1966653&email=' + req.body.email,
+    method: 'GET',
+    headers: {
+        "User-Agent": "Mozilla/5.0"
+    }
+}
+
+// set up the request
+
+var request = https.request(options, function(response){
+    console.log("Status: " + response.statusCode);
+    console.log("Headers: " + JSON.stringify(response.headers));
+    response.setEncoding('utf8');
+    response.on('data', function(chunk){
+        console.log('Body: ' + chunk)
+    });
+});
+
+request.on('error', function(e){
+    console.log("Problem with request " + e.message)
+});
+
+// post the data
+
+request.write(getData);
+request.end();
+
+res.json({message: res.statusCode});
+}); 
+
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
