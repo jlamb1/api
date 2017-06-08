@@ -72,7 +72,7 @@ var postData = querystring.stringify({
     'firstname': req.body.firstname,
     'lastname': req.body.lastname,
     'hs_context': JSON.stringify({
-        "hutk": req.cookies.hubspotutk,
+       // "hutk": req.cookies.hubspotutk,
         "ipAddress": req.headers['x-forwarded-for'] || req.connection.remoteAddress,
         "pageUrl": "https://www.phrasingpro.com/api",
         "pageName": "Forms API - Tech Test"
